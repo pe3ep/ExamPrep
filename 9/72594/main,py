@@ -1,0 +1,42 @@
+with open("E:\\EGE\\9\\72594\\72594.csv") as xfile: strings = xfile.readlines()
+
+
+def first(li: list):
+  for i in li:
+    if (li.count(i) >= 3):
+      return True
+  return False
+
+def second(li: list):
+  for i in li:
+    if (li.count(i) == 1):
+      return True
+  return False
+
+def third(li: list):
+  pov = {}
+  for i in li:
+    if i not in pov:
+      pov[i] = li.count(i)
+  
+  sumSolo = 0
+  sumSquad = 0
+  soloInt = 0
+  squadInt = 0
+  for i in pov:
+    if pov[i] == 1:
+      sumSolo += i
+      soloInt += 1
+    else:
+      sumSquad += i * pov[i]
+      squadInt += pov[i]
+
+  return (sumSquad / squadInt) < (sumSolo / soloInt)
+ 
+c = 0
+for i in strings:
+  nums = list(map(int, i.split(",")))
+  if first(nums) and second(nums) and third(nums):
+    c += 1
+
+print(c)
