@@ -25,4 +25,3 @@ for i in strings:
     c += 1
 
 print(c)
-  
