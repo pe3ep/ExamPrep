@@ -7,24 +7,28 @@ valid_strings = []
 buffer = ""
 
 variants = list(product("+*", repeat=2))
-maxLen = 0
-
-
-def isCorrect(s, start, end):
-  return s[start:end][0] not in "*+" and s[start:end][0] != "0" and s[start:end][-1] not in "+*"
 
 def find_max(s: str):
-  start = 0
-  maxLen = 0
-  while start != len(s):
-    end = len(s)
-    for i in range(end, start, -1):
-      if isCorrect(s, start, i):
-        part = s[start:i]
-        if eval(part) == 0:
-          maxLen = max(maxLen, len(part))
-    start += 1
-  return maxLen
+  s = s.split("+")
+  r = []
+  for i in s:
+    if eval(i) == 0:
+      r.append(len(i))
+    else:
+      r.append(0)
+
+  lens = []
+  c = 0
+  for i in range(len(r)):
+    if r[i] == 0:
+      lens.append(c - 1)
+      c = 0
+      continue
+    c += r[i] + 1
+
+  if len(lens) == 0:
+    return c - 1
+  return max(lens)    
   
 # Find vaild strings
 for i in range(1, len(s)):
@@ -46,7 +50,3 @@ for i in searchingIn:
   maxLen = max(maxLen, find_max(i))
 
 print(maxLen)
-
-  # for part in sorted(parts, key=len, reverse=True):
-  #   if eval(part) == 0: 
-  
